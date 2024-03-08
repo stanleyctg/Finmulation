@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="widht-device-width, initial-scale=1.0">
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+        <title>Home</title>
+        <link rel="stylesheet" href="static/style.css">
+    </head>
+
+    <body>
+        <header>
+            <nav>
+                <div class="logo">Home</div>
+                <ul class="nav-links">
+                    <li><a href="#">Home</a></li>
+                    <li><a href="#">Owned</a></li>
+                    <li><a href="#">Profile</a></li>
+                </ul>
+            </nav>
+        </header>
+        {% block body %}{% endblock %}
+    </body>
+
+    <footer>
+        <p>&#169 2024 Finmulation. All rights reserved</p>
+    </footer>
+</html>
