@@ -5,7 +5,7 @@ This project involves the use of yahoo finance to retrieve real time prices for 
 Total Overview:
 A login system that uses flask sessions to differentiate their respective data.
 Homepage where users can search for a specific stock, then it will display the price of the stock along with the quantity and buy button.
-A sell button in the Navbar that takes user to the page that display all the stocks they have owned, these price per stock bought are compared to the price of the stock currently and provides feedback such as loss or profits or remain.
+An "owned" button in the Navbar that takes user to the page that display all the stocks they have owned, these price per stock bought are compared to the price of the stock currently and provides feedback such as loss or profits or remain. example if I bought an apple stock for $170, and the current price is $175 then it shows I will get a profit of $5 by selling it.
 
 Functionalities:
 When a user buys stocks, it should decrease their balance and add it to their purchase history and the stocks owned along with details of the price per stock bought.
@@ -16,11 +16,13 @@ All these will be linked to the database.
 Database:
 User_credentials table- consists of unique usernames, and passwords.
 Profile- consists of stocks owned, quantity, bought price, date bought.
+
+Language used: Flask(python), HTML, CSS, Javascript, SQL.js
  
 5 weeks to complete before moving into market predictions.
 Weekly agendas:
-Week1: Prepare all the pages. Allow user to search for symbols, and display price of each stock with quantity and buy button.
-Week2: Complete buy function and add it to the purchase history and stocks owned page. At this point should start on finishing database.
+Week1: Prepare all the pages. Allow user to search for symbols, and display price of each stock with quantity and buy button. (Done)
+Week2: Complete buy function and add it to the purchase history and stocks owned page. At this point should start on database.
 Week3: Complete sell function and performance chart.
 Week4: Complete login system 
-Week5: Styling make it nice and all done.
+Week5: Additional styling
