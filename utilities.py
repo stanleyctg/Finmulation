@@ -3,6 +3,7 @@ import csv  #API return stock data in CSV format
 import uuid #uuid generates unique identifiers
 import pytz #pytz provides time zone definitions for all time zones
 import datetime 
+import random
 from urllib.parse import quote_plus #Ensure the stock symbol is properly formatted inclusion in URL
 
 def lookup(symbol):
@@ -37,3 +38,22 @@ def lookup(symbol):
         }
     except (requests.RequestException, ValueError, KeyError, IndexError):
         return None
+
+
+def display_random():
+    all_symbols = ['AAPL', 'GOOG', 'MSFT', 'AMZN', 'FB', 'TSLA', 'BRK-A', 'V', 'JPM', 'JNJ', 'XOM', 'BAC', 'WMT', 'PG', 'CVX', 'PFE', 'TMO', 'UNH', 'DIS']
+    data = []
+    # Randomly select 10 unique stock symbols
+    random_symbols = random.sample(all_symbols, 10)
+
+    # Fetch and print the stock data for the selected symbols
+    for symbol in random_symbols:
+        stock_data = lookup(symbol)
+        if stock_data:
+            data.append(f"{stock_data['name']}: ${stock_data['price']}")
+        else:
+            print(f"Data for {symbol} not found.")
+
+    return data
+
+

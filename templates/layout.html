@@ -21,7 +21,16 @@
         </header>
         {% block body %}{% endblock %}
     </body>
-
+    <table>
+        <th>Symbols</th>
+        <th>Price per unit</th>
+        {% for stock in data %}
+            <tr>
+                <td>{{ stock.name }}</td>
+                <td>{{ stock.price }}</td>
+            </tr>
+        {% endfor %}
+    </table>
     <footer>
         <p>&#169 2024 Finmulation. All rights reserved</p>
     </footer>
