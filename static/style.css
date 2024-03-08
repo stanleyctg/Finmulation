@@ -92,6 +92,7 @@ footer {
 table, th, td {
     border: 2px solid;
     border-collapse: collapse;
+    border-color: #333;
     text-align: center;
     margin-left: 25%;
     margin-right: 25%;
@@ -110,6 +111,31 @@ table {
 .coin {
     position: fixed;
     bottom: 500px;
+}
+
+.bill {
+    position: fixed;
+    bottom: 350px;
+    margin-left: 80px;
+}
+
+.bill2 {
+    position: fixed;
+    bottom: 350px;
+    right: 80px;
+}
+
+.currencies {
+    position: fixed;
+    bottom: 450px;
+    margin-left: 25%;
+    transform: rotate(330deg);
+}
+
+.stocks {
+    position: fixed;
+    bottom: 450px;
+    right: 350px;
 }
 
 .coin2 {
