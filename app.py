@@ -2,8 +2,6 @@ from flask import Flask, render_template, request, jsonify
 from utilities import lookup, display_random
 app = Flask(__name__)
 
-data = lookup("AAPL")
-print(data)
 @app.route('/')
 def home():
     raw_data = display_random()
