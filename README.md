@@ -17,7 +17,7 @@ Database:
 User_credentials table- consists of unique usernames, and passwords.
 Profile- consists of stocks owned, quantity, bought price, date bought.
 
-Language used: Flask(python), HTML, CSS, Javascript, SQL.js
+Language used: Flask(python), HTML, CSS, Javascript (AJAX, chart.js), SQLite3
  
 5 weeks to complete before moving into market predictions.
 Weekly agendas:
