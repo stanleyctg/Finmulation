@@ -10,6 +10,7 @@ $(document).ready(function(){
                                         //The serialisation is act of connection to the backend
             success: function(response) { //Upon successful response from the backend it is now connected as backened sends data upon retieving from form
                 var total = response.total
+                var priceStock = response.total
                 var symbol = response.searched_symbol
                 symbol = symbol.split(":")[0].trim();
                 var resultHtml = `
@@ -32,13 +33,13 @@ $(document).ready(function(){
                 $('#search-results').on('click', '#buy-btn', function() {
                     var quantity = $('#quantity').val();
                     total = (total*quantity).toFixed(2);
-                    buyStock(symbol, quantity, total);
+                    buyStock(symbol, quantity, total, priceStock);
                 });
             }
         });
     });
 });
 
-function buyStock(symbol, quantity, total) {
-    alert(`buying ${quantity} stocks of ${symbol} for a total of $${total}`);
+function buyStock(symbol, quantity, total, priceStock) {
+    alert(`buying ${quantity} stocks of ${symbol} for a total of $${total} where each stock costs $${priceStock}`);
 }
