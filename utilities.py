@@ -9,7 +9,7 @@ from urllib.parse import quote_plus #Ensure the stock symbol is properly formatt
 def lookup(symbol):
     """Look up quote for symbol."""
 
-    # Prepare API request
+    # Prepare API request, and get the necessary nformation to call api
     symbol = symbol.upper() #Stocks are typically uppercase
     end = datetime.datetime.now(pytz.timezone("US/Eastern")) 
     start = end - datetime.timedelta(days=7)
@@ -55,5 +55,3 @@ def display_random():
             print(f"Data for {symbol} not found.")
 
     return data
-
-

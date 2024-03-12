@@ -90,7 +90,7 @@ footer {
 }
 
 table, th, td {
-    border: 2px solid;
+    border-bottom: #333 solid 1.5px;
     border-collapse: collapse;
     border-color: #333;
     text-align: center;
