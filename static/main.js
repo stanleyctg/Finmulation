@@ -1,4 +1,6 @@
 $(document).ready(function(){
+    var balanceText = $('#balance').text(); 
+    var balanceAmount = parseInt(balanceText.replace(/[^0-9]/g, ''), 10);
     $('#search_stock').on('submit', function(e){
         e.preventDefault(); // Prevent the default form submission
         $.ajax({
@@ -30,13 +32,33 @@ $(document).ready(function(){
                 $(document).off('click', '#buy-btn-' + symbol).on('click', '#buy-btn-' + symbol, function() {
                     var quantity = $(`#quantity-${symbol}`).val();
                     var totalCost = (pricePerStock * quantity).toFixed(2);
-                    buyStock(symbol, quantity, totalCost, pricePerStock);
+                    buyStock(symbol, quantity, totalCost, pricePerStock, balanceAmount);
                 });
             }
         });
     });
 });
 
-function buyStock(symbol, quantity, totalCost, pricePerStock) {
-    alert(`Buying ${quantity} stocks of ${symbol} for a total of $${totalCost} where each stock costs $${pricePerStock}`);
+function buyStock(symbol, quantity, totalCost, pricePerStock, balanceAmount) {
+    //Connect these data into flask to add into database
+    balanceAmount = balanceAmount - totalCost;
+    balanceAmount.toFixed(2);
+    var balanceT = document.getElementById("balance");
+    balanceT.innerHTML = "Balance: $" + balanceAmount;
+    $.ajax({
+        url: '/buy',
+        type: 'post',
+        data: {
+            symbol: symbol,
+            quantity: quantity,
+            boughtPrice: pricePerStock,
+            total: totalCost
+        },
+        success: function(response){
+            alert(response.message);
+        },
+        error: function() {
+            alert("Error");
+        }
+    });
 }

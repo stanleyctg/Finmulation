@@ -143,3 +143,17 @@ table {
     right: 10px;
     bottom: 500px;
 }
+
+.balance-box {
+    position: fixed;
+    right: 30px;
+    top: 100px;
+    width: 200px; /* Specify the width of the box */
+    height: 50px; /* Specify the height of the box */
+    border: 1px solid #ddd; /* Light grey border */
+    padding: 20px; /* Add some space inside the box around the content */
+    display: flex; /* Use Flexbox to align content */
+    flex-direction: column; /* Stack flex items vertically */
+    justify-content: center; /* Center content vertically */
+    align-items: center; /* Center content horizontally */
+}
