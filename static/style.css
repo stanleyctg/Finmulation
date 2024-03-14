@@ -168,7 +168,7 @@ table {
 .owned-table th,
 .owned-table td {
     width: 60px;
-    text-align: left;
+    text-align: center;
     padding: 8px;
     border: 1px solid #ddd;
 }

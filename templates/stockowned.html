@@ -1,7 +1,8 @@
 {% extends "layout.html" %}
 
 {% block body %}
-    <table class="owned-table">
+ <div onload="setDefaultValue()">
+        <table class="owned-table">
         <thead>
             <tr>
                 <th>no.</th>
@@ -9,6 +10,7 @@
                 <th>Quantity</th>
                 <th>Total</th>
                 <th>Sell Rate</th>
+                <th>Sell stock</th>
             </tr>
         </thead>
         <tbody>
@@ -18,13 +20,49 @@
                     <td>{{ s[1] }}</td>
                     <td>{{ s[2] }}</td>
                     <td>${{ s[4] }}</td>
-                    <td><input type="number" id="quantity-${symbol}" name="quantity" min="1" value="1">
-                        <button id="buy-btn-${symbol}">Sell</button>
-                        <p>Total: $<span id="total-${symbol}">{{ s[-1] }}</span></p></td>
+                    <td id="sellRate-{{ s[1] }}">{{ s[-1] }}</td>
+                    <td>
+                        <input type="number" id="quantity-{{ s[1] }}" name="quantity-{{ s[1] }}" min="1" max="{{ s[2] }}" value="1">
+                        <button id="sell-btn-{{ s[1] }}">Sell</button>
+                        <p>Total: $<span id="total-{{ s[1] }}">{{ s[-1] }}</span></p> 
+                    </td>
                 </tr>
             {% endfor %}
         </tbody>
     </table>
+ </div>   
+
 </div>
+
+<script>
+    document.addEventListener("DOMContentLoaded", function() {
+    // Listen for input on any quantity input
+        document.querySelectorAll('[id^="quantity-"]').forEach(input => {
+            input.value  = 1
+            input.addEventListener('input', function() {
+                var symbol = this.id.split('-')[1];
+                var sellRate = parseFloat(document.getElementById(`sellRate-${symbol}`).innerText); // Assuming the sell rate is stored in total initially
+                var newTotal = this.value * sellRate;
+
+                document.getElementById(`total-${symbol}`).innerText = newTotal.toFixed(2);
+
+            });
+        });
+    });
+
+    document.querySelectorAll('[id^="sell-btn-"]').forEach(button => {
+        button.addEventListener('click', function() {
+            var symbol = this.id.split('-')[2];
+            var quantityInput = document.getElementById(`quantity-${symbol}`);
+            var sellRate = parseFloat(document.getElementById(`sellRate-${symbol}`).innerText);
+            var quantity = parseInt(quantityInput.value, 10);
+            var totalSale = quantity * sellRate;
+
+            alert(`Selling ${quantity} of ${symbol} for a total of $${totalSale}`);
+        });
+    });
+
+</script> 
+    
 
 {% endblock %}
