@@ -1,5 +1,5 @@
 from flask import Flask, render_template, request, jsonify
-from utilities import lookup, display_random
+from utilities import lookup, display_random, lookup_chart
 import sqlite3
 app = Flask(__name__)
 
@@ -15,9 +15,10 @@ def home():
 def search():
     symbol = request.form['symbol']
     data = lookup(symbol)
+    past_data = lookup_chart(symbol)
     total = data["price"]
     data_final = data["name"] + " : " + "$" + str(data["price"])
-    return jsonify(searched_symbol=data_final, total=total)
+    return jsonify(searched_symbol=data_final, total=total, past_data=past_data)
 
 @app.route('/buy', methods=['POST'])
 def buy_stock():

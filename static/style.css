@@ -185,3 +185,11 @@ table {
 .owned-table thead th {
     box-shadow: 0 2px 2px -1px rgba(0,0,0,0.4);
 }
+
+
+.chartContainer {
+    display: flex;
+    justify-content: center; /* Center horizontally */
+    align-items: center; /* Center vertically */
+    height: 300px; /* Full viewport height */
+}
