@@ -157,3 +157,31 @@ table {
     justify-content: center; /* Center content vertically */
     align-items: center; /* Center content horizontally */
 }
+
+/* Add this CSS to your static/style.css */
+.owned-table {
+    border-collapse: collapse;
+    top: 15%;
+    overflow-x: auto; /* Enables horizontal scrolling */
+}
+
+.owned-table th,
+.owned-table td {
+    width: 60px;
+    text-align: left;
+    padding: 8px;
+    border: 1px solid #ddd;
+}
+
+/* Make the table header sticky */
+.owned-table thead th {
+    position: sticky;
+    top: 0;
+    background-color: #f9f9f9;
+    z-index: 2;
+}
+
+/* Optional: Add a box-shadow or border to the sticky header for better separation */
+.owned-table thead th {
+    box-shadow: 0 2px 2px -1px rgba(0,0,0,0.4);
+}

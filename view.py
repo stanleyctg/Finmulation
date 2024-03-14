@@ -1,17 +1,13 @@
 import sqlite3
-
+d = []
 # Connect to the SQLite database
 conn = sqlite3.connect("stocks.db")
 cursor = conn.cursor()
 
-# Now, query the table to see all rows
-query = "SELECT * FROM stock_purchase"
-cursor.execute(query)
+cursor.execute('SELECT quantity, total FROM stock_purchase WHERE symbol = ?', ("AAPL",))
+row = list(cursor.fetchone())
 
-# Fetch and print all rows of data
-rows = cursor.fetchall()
-for row in rows:
-    print(row)
+print(row)
 
 # Close the connection
 conn.close()

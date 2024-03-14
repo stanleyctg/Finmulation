@@ -1,5 +1,30 @@
 {% extends "layout.html" %}
 
 {% block body %}
+    <table class="owned-table">
+        <thead>
+            <tr>
+                <th>no.</th>
+                <th>Symbol</th>
+                <th>Quantity</th>
+                <th>Total</th>
+                <th>Sell Rate</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for s in data %}
+                <tr>
+                    <td>{{ s[0] }}</td>
+                    <td>{{ s[1] }}</td>
+                    <td>{{ s[2] }}</td>
+                    <td>${{ s[4] }}</td>
+                    <td><input type="number" id="quantity-${symbol}" name="quantity" min="1" value="1">
+                        <button id="buy-btn-${symbol}">Sell</button>
+                        <p>Total: $<span id="total-${symbol}">{{ s[-1] }}</span></p></td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
 
 {% endblock %}

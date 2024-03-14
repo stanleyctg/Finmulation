@@ -13,18 +13,16 @@
             <nav>
                 <div id="balance">Balance: $10000</div>
                 <ul class="nav-links">
-                    <li><a href="home.html">Home</a></li>
+                    <li><a href="{{ url_for ('home') }}">Home</a></li>
                     <li><a href="{{ url_for('owned') }}">Owned</a></li>
                     <li><a href="#">Profile</a></li>
                 </ul>
             </nav>
         </header>
         {% block body %}{% endblock %}
+    <!-- {% block optional_section %}
     </body>
     <table>
-        <!-- <div class="balance-box">
-            Balance: $10000
-        </div> -->
         <th>Symbols</th>
         <th>Price per unit</th>
         {% for stock in data %}
@@ -34,6 +32,7 @@
             </tr>
         {% endfor %}
     </table>
+    {% endblock %} -->
     <!-- <div class="coin">
     <img src="../static/images/coin.png", width="100", height="100">   
     <img src="../static/images/coin.png", width="100", height="100">   
