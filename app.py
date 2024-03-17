@@ -31,7 +31,6 @@ def search():
 def sell_stock():
     symbol = request.form['symbol']
     quantity = int(request.form['quantity'])
-    bought_price = float(request.form['boughtPrice'])
     total = float(request.form['total'])
     
     conn = sqlite3.connect(database)  
@@ -42,7 +41,31 @@ def sell_stock():
     new_balance = round(balance_row[0] + total, 2)
 
     cursor.execute("UPDATE account_details SET balance = ? WHERE username = ?", (new_balance, "stanleyctg"))
+    cursor.execute("SELECT quantity, total, id,  bought_price FROM stock_purchase WHERE symbol = ?", (symbol,))
     
+    row = cursor.fetchone()
+    if row:
+        new_quantity = row[0] - quantity
+        if new_quantity == 0:
+            cursor.execute("DELETE FROM stock_purchase WHERE symbol = ?", (symbol,))
+            # cursor.execute("CREATE TEMPORARY TABLE stocks_temp AS SELECT * FROM stock_purchase WHERE 1=0")
+            # cursor.execute("INSERT INTO stocks_temp (symbol, quantity, boughtprice, total) SELECT symbol, quantity, bought_price, total FROM stock_purchase ORDER BY id")
+            # cursor.execute("DROP TABLE stock_purchase")
+            # cursor.execute("ALTER TABLE stocks_temp RENAME TO stock_purchase")
+
+
+            # cursor.execute("UPDATE sqlite_sequence SET seq = (SELECT MAX(id) FROM stock_purchase) WHERE name = 'stock_purchase'")
+
+            # cursor.execute("DELETE FROM sqlite_sequence WHERE name = 'stock_purchase'")
+
+            # cursor.execute("SELECT ROW_NUMBER() OVER (ORDER BY id) AS seq, symbol, quantity, bought_price, total FROM stock_purchase")
+
+
+        else:
+            cursor.execute("UPDATE stock_purchase SET quantity = ? WHERE symbol = ?", (new_quantity, symbol))
+            new_total = round(row[1] - (quantity * row[-1]), 2)
+            cursor.execute("UPDATE stock_purchase SET total = ? WHERE symbol = ?", (new_total, symbol))
+
     conn.commit()
     conn.close()
     

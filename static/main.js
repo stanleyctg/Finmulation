@@ -38,13 +38,13 @@ $(document).ready(function(){
                 });
                 var x = response.past_data[1]
                 var y = response.past_data[0]
-                drawChart(symbol, x, y); // Pass symbol as argument
+                drawSymbolChart(symbol, x, y); // Pass symbol as argument
             }
         });
     });
 });
 
-function drawChart(symbol, x, y) { // Accept symbol as parameter
+function drawSymbolChart(symbol, x, y) { // Accept symbol as parameter
     var ctx = document.getElementById('chart-container').getContext('2d');
     var xValues = x;
     var yValues = y
@@ -149,6 +149,7 @@ document.addEventListener("DOMContentLoaded", function() {
                     success: function(response){
                         alert(response.new_balance);
                         balanceT.innerHTML = "Balance: $" + response.new_balance;
+                        location.reload()
                     },
                     error: function() {
                         alert("Error sale");
@@ -162,36 +163,36 @@ document.addEventListener("DOMContentLoaded", function() {
     
 
 
-function setupChart() { 
-    var months = ['01', '02', '03', '04', '05', '06', '07', '08', '09', '10', '11', '12'];
-    var countList = [2,3,4,5,6,7,8,9,1,2,3,4];
+// function setupChart() { 
+//     var months = ['01', '02', '03', '04', '05', '06', '07', '08', '09', '10', '11', '12'];
+//     var countList = [2,3,4,5,6,7,8,9,1,2,3,4];
 
-    }
-    const ctx = document.getElementById('homeChart').getContext('2d');
-    const myChart = new Chart(ctx, {
-        type: 'line',
-        data: {
-            labels: ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'],
-            datasets: [{
-                label: "Workouts per Month",
-                data: countList,
-                backgroundColor: 'rgba(255, 99, 132, 0.2)',
-                borderColor: 'rgba(255, 99, 132, 1)',
-                borderWidth: 1
-            }]
-        },
-        options: {
-            scales: {
-                y: {
-                    beginAtZero: false,
-                    ticks: {
-                        stepSize: 1,
-                        precision: 0
-                    }
-                }
-            }
-        }
-    });
-document.addEventListener('DOMContentLoaded', function() {
-    setupChart(window.chartDates);
-});
+//     }
+//     const ctx = document.getElementById('homeChart').getContext('2d');
+//     const myChart = new Chart(ctx, {
+//         type: 'line',
+//         data: {
+//             labels: ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'],
+//             datasets: [{
+//                 label: "Workouts per Month",
+//                 data: countList,
+//                 backgroundColor: 'rgba(255, 99, 132, 0.2)',
+//                 borderColor: 'rgba(255, 99, 132, 1)',
+//                 borderWidth: 1
+//             }]
+//         },
+//         options: {
+//             scales: {
+//                 y: {
+//                     beginAtZero: false,
+//                     ticks: {
+//                         stepSize: 1,
+//                         precision: 0
+//                     }
+//                 }
+//             }
+//         }
+//     });
+// document.addEventListener('DOMContentLoaded', function() {
+//     setupChart(window.chartDates);
+// });
