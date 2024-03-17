@@ -12,7 +12,10 @@
     <body>
         <header>
             <nav>
-                <div id="balance">Balance: $10000</div>
+                {% if account %}
+                    <div id="balance">Balance: ${{ account['balance'] }}</div>
+                {% endif %}
+
                 <ul class="nav-links">
                     <li><a href="{{ url_for ('home') }}">Home</a></li>
                     <li><a href="{{ url_for('owned') }}">Owned</a></li>

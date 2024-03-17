@@ -92,5 +92,3 @@ def display_random():
             print(f"Data for {symbol} not found.")
 
     return data
-
-print(lookup_chart("AAPL"))

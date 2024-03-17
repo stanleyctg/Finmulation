@@ -14,5 +14,14 @@ CREATE TABLE IF NOT EXISTS stock_purchase (
 )
 ''')
 
+cursor.execute('''
+CREATE TABLE IF NOT EXISTS account_details(
+    id INTEGER PRIMARY KEY,
+    username TEXT NOT NULL,
+    password TEXT NOT NULL,
+    balance INTEGER NOT NULL
+)
+''')
+
 conn.commit()
 conn.close()

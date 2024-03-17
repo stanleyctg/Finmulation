@@ -91,10 +91,7 @@ function drawChart(symbol, x, y) { // Accept symbol as parameter
 
 function buyStock(symbol, quantity, totalCost, pricePerStock, balanceAmount) {
     //Connect these data into flask to add into database
-    balanceAmount = balanceAmount - totalCost;
-    balanceAmount.toFixed(2);
     var balanceT = document.getElementById("balance");
-    balanceT.innerHTML = "Balance: $" + balanceAmount;
     $.ajax({
         url: '/buy',
         type: 'post',
@@ -106,6 +103,8 @@ function buyStock(symbol, quantity, totalCost, pricePerStock, balanceAmount) {
         },
         success: function(response){
             alert(response.message);
+            alert(response.new_balance);
+            balanceT.innerHTML = "Balance: $" + response.new_balance;
         },
         error: function() {
             alert("Error");
@@ -127,18 +126,40 @@ document.addEventListener("DOMContentLoaded", function() {
             });
         });
     });
-
-    document.querySelectorAll('[id^="sell-btn-"]').forEach(button => {
-        button.addEventListener('click', function() {
-            var symbol = this.id.split('-')[2];
-            var quantityInput = document.getElementById(`quantity-${symbol}`);
-            var sellRate = parseFloat(document.getElementById(`sellRate-${symbol}`).innerText);
-            var quantity = parseInt(quantityInput.value, 10);
-            var totalSale = (quantity * sellRate).toFixed(2);
-
-            alert(`Selling ${quantity} of ${symbol} for a total of $${totalSale} at $${sellRate} per unit.`);
+    document.addEventListener("DOMContentLoaded", function() {
+        document.querySelectorAll('[id^="sell-btn-"]').forEach(button => {
+            button.addEventListener('click', function() {
+                var balanceT = document.getElementById("balance");
+                var symbol = this.id.split('-')[2];
+                var quantity = document.querySelector(`#quantity-${symbol}`).value;
+                var sellRate = parseFloat(document.querySelector(`#sellRate-${symbol}`).innerText);
+                var totalSale = (quantity * sellRate).toFixed(2);
+    
+                alert(`Selling ${quantity} of ${symbol} for a total of $${totalSale} at $${sellRate} per unit.`);
+            
+                $.ajax({
+                    url: '/sell',
+                    type: 'POST',
+                    data: {
+                        symbol: symbol,
+                        quantity: quantity,
+                        boughtPrice: sellRate,
+                        total: totalSale
+                    },
+                    success: function(response){
+                        alert(response.new_balance);
+                        balanceT.innerHTML = "Balance: $" + response.new_balance;
+                    },
+                    error: function() {
+                        alert("Error sale");
+                    }
+                });    
+            });
         });
     });
+    
+    
+    
 
 
 function setupChart() { 
