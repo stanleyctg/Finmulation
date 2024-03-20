@@ -48,18 +48,6 @@ def sell_stock():
         new_quantity = row[0] - quantity
         if new_quantity == 0:
             cursor.execute("DELETE FROM stock_purchase WHERE symbol = ?", (symbol,))
-            # cursor.execute("CREATE TEMPORARY TABLE stocks_temp AS SELECT * FROM stock_purchase WHERE 1=0")
-            # cursor.execute("INSERT INTO stocks_temp (symbol, quantity, boughtprice, total) SELECT symbol, quantity, bought_price, total FROM stock_purchase ORDER BY id")
-            # cursor.execute("DROP TABLE stock_purchase")
-            # cursor.execute("ALTER TABLE stocks_temp RENAME TO stock_purchase")
-
-
-            # cursor.execute("UPDATE sqlite_sequence SET seq = (SELECT MAX(id) FROM stock_purchase) WHERE name = 'stock_purchase'")
-
-            # cursor.execute("DELETE FROM sqlite_sequence WHERE name = 'stock_purchase'")
-
-            # cursor.execute("SELECT ROW_NUMBER() OVER (ORDER BY id) AS seq, symbol, quantity, bought_price, total FROM stock_purchase")
-
 
         else:
             cursor.execute("UPDATE stock_purchase SET quantity = ? WHERE symbol = ?", (new_quantity, symbol))
@@ -70,6 +58,7 @@ def sell_stock():
     conn.close()
     
     return jsonify({"new_balance": new_balance})
+
 @app.route('/buy', methods=['POST'])
 def buy_stock():
     symbol = request.form['symbol']
@@ -126,6 +115,7 @@ def owned():
         symbol_dict = (lookup(priceUnit[i]))
         priceUnit[i] = symbol_dict["price"]
 
+
     i = 0
     j = 0
 
@@ -133,6 +123,20 @@ def owned():
         data[i].append(priceUnit[j])
         i += 1
         j += 1
+
+    for stock in data:
+        profit_loss_per_unit = stock[5] - stock[3]
+        total_profit_loss = profit_loss_per_unit * stock[2]
+        if profit_loss_per_unit > 0:
+            unit_message = f"Profit: ${profit_loss_per_unit:.2f}/unit"
+            total_message = f"Total Profit: ${total_profit_loss:.2f}"
+        else:
+            unit_message = f"Loss: ${abs(profit_loss_per_unit):.2f}/unit"
+            total_message = f"Total Loss: ${abs(total_profit_loss):.2f}"
+        
+        # Append the message to the sublist
+        stock.append(unit_message)
+        stock.append(total_message)
 
     return render_template('stockowned.html', data=data, priceUnit=priceUnit)
 

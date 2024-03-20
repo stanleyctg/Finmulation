@@ -1,7 +1,7 @@
 {% extends "layout.html" %}
 
 {% block body %}
- <div onload="setDefaultValue()">
+ <div class="table-container" onload="setDefaultValue()">
         <table class="owned-table">
         <thead>
             <tr>
@@ -9,6 +9,7 @@
                 <th>Quantity</th>
                 <th>Total</th>
                 <th>Sell Rate</th>
+                <th>Profit/Loss</th>
                 <th>Sell stock</th>
             </tr>
         </thead>
@@ -18,11 +19,12 @@
                     <td>{{ s[1] }}</td>
                     <td>{{ s[2] }}</td>
                     <td>${{ s[4] }}</td>
-                    <td id="sellRate-{{ s[1] }}">{{ s[-1] }}</td>
+                    <td id="sellRate-{{ s[1] }}">${{ s[-3] }}</td>
+                    <td>{{ s[-2] }} <br> {{ s[-1] }}</td>
                     <td>
                         <input type="number" id="quantity-{{ s[1] }}" name="quantity-{{ s[1] }}" min="1" max="{{ s[2] }}" value="1">
                         <button id="sell-btn-{{ s[1] }}">Sell</button>
-                        <p>Total: $<span id="total-{{ s[1] }}">{{ s[-1] }}</span></p> 
+                        <p>Total: $<span id="total-{{ s[1] }}">{{ s[-3] }}</span></p> 
                     </td>
                 </tr>
             {% endfor %}

@@ -118,7 +118,7 @@ document.addEventListener("DOMContentLoaded", function() {
             input.value  = 1
             input.addEventListener('input', function() {
                 var symbol = this.id.split('-')[1];
-                var sellRate = parseFloat(document.getElementById(`sellRate-${symbol}`).innerText); // Assuming the sell rate is stored in total initially
+                var sellRate = parseFloat(document.getElementById(`sellRate-${symbol}`).innerText.replace('$', ''));
                 var newTotal = this.value * sellRate;
 
                 document.getElementById(`total-${symbol}`).innerText = newTotal.toFixed(2);
