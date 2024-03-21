@@ -178,6 +178,7 @@ table {
     min-width: 80px;
     height: 10px;
     text-align: center;
+    border-top: solid;
     padding: 8px;
     border: 1px solid #ddd;
 }
@@ -201,4 +202,46 @@ table {
     justify-content: center; /* Center horizontally */
     align-items: center; /* Center vertically */
     height: 300px; /* Full viewport height */
+}
+
+
+.history-table-container {
+    display: flex;
+    justify-content: center; /* Center horizontally */
+    width: 100%; /* Take the full width of its parent */
+    overflow-y: auto; /* Allows vertical scrolling if the table is taller than the container */
+}
+
+.history-table {
+    width: 80%; /* Adjust as necessary */
+    table-layout: fixed;
+    border-collapse: collapse;
+    bottom: 12%;
+    /* Removed align-self and overflow-y; placed overflow-y on the container */
+}
+
+.history-table th,
+.history-table td {
+    min-width: 80px;
+    height: 10px;
+    text-align: center;
+    padding: 8px;
+    border-bottom: 1px solid;
+}
+
+.history-owned-table thead th {
+    box-shadow: 0 2px 2px -1px rgba(0,0,0,0.4);
+}
+
+.history-owned-table thead th {
+    position: sticky;
+    top: 0;
+    background-color: #f9f9f9;
+    z-index: 2;
+}
+
+.profile-title{
+    text-align: center;
+    font-size: larger;
+
 }

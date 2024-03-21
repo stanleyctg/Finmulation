@@ -132,7 +132,7 @@ document.addEventListener("DOMContentLoaded", function() {
                 var balanceT = document.getElementById("balance");
                 var symbol = this.id.split('-')[2];
                 var quantity = document.querySelector(`#quantity-${symbol}`).value;
-                var sellRate = parseFloat(document.querySelector(`#sellRate-${symbol}`).innerText);
+                var sellRate = parseFloat(document.querySelector(`#sellRate-${symbol}`).innerText.replace('$', ''));
                 var totalSale = (quantity * sellRate).toFixed(2);
     
                 alert(`Selling ${quantity} of ${symbol} for a total of $${totalSale} at $${sellRate} per unit.`);
@@ -160,6 +160,47 @@ document.addEventListener("DOMContentLoaded", function() {
     });
     
     
+    document.addEventListener("DOMContentLoaded", function() {
+        // Generate random dataset    
+        const ctx = document.getElementById('profile-chart-container').getContext('2d');
+        var myChart = new Chart(ctx, {
+            type: 'line',
+            data: {
+                labels: [2,3,5],
+                datasets: [{
+                    label: "Portfolio Chart",
+                    data: [1,2,3],
+                    borderColor: 'rgb(75, 192, 192)',
+                    borderWidth: 1
+                }]
+            },
+            options: {
+                scales: {
+                    x: {
+                        title: {
+                            display: true,
+                            text: "x-values",
+                            font: {
+                                lineHeight: 1.2,
+                                weight: 'bold'
+                            }
+                        }
+                    },
+                    y: {
+                        beginAtZero: false,
+                        title: {
+                            display: true,
+                            text: "y-values",
+                            font: {
+                                lineHeight: 1.2,
+                                weight: 'bold'
+                            }
+                        }
+                    }
+                }
+            }
+        });
+    });
     
 
 

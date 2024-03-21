@@ -1,0 +1,32 @@
+{% extends "layout.html" %}
+
+{% block body %}
+
+<div class="content-wrapper">
+    <div class="row chartContainer" style="padding-top: 10%;">
+        <canvas id="profile-chart-container"></canvas>
+    </div>
+
+    <div class="history-table-container">
+        <table class="history-table">
+            <thead>
+                <tr>
+                    <th>Purchase History</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for s in data %}
+                <tr>
+                    <td>You've bought {{ s[2] }} stocks of {{ s[1] }}, with a unit price of ${{ s[3] }} at a total cost of ${{ s[4] }}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+
+
+<script src="{{ url_for('static', filename='main.js') }}"></script>
+
+
+{% endblock %}
