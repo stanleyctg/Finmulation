@@ -167,6 +167,8 @@ def profile():
     rows = cursor.fetchall()
     for row in rows:
         data.append(list(row))
+
+    data.reverse()
     return render_template("profile.html", data=data)
 
 
