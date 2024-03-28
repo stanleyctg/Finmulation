@@ -1,5 +1,6 @@
 from flask import Flask, render_template, request, jsonify, g
 from utilities import lookup, lookup_chart
+from datetime import datetime
 import sqlite3
 
 app = Flask(__name__)
@@ -39,6 +40,7 @@ def sell_stock():
     symbol = request.form['symbol']
     quantity = int(request.form['quantity'])
     total = float(request.form['total'])
+
     conn = sqlite3.connect(database)
     cursor = conn.cursor()
     cursor.execute("""SELECT balance
@@ -78,12 +80,15 @@ def buy_stock():
     quantity = int(request.form['quantity'])
     bought_price = float(request.form['boughtPrice'])
     total = float(request.form["total"])
+
     conn = sqlite3.connect(database)
+    now = datetime.now()
+    date = now.strftime("%Y-%m-%d %H:%M:%S")
     cursor = conn.cursor()
     cursor.execute("""INSERT INTO purchase_history
-                    (symbol, quantity, bought_price, total)
-                    VALUES (?, ?, ?, ?) """,
-                     (symbol, quantity, bought_price, total))
+                    (symbol, quantity, bought_price, total, date)
+                    VALUES (?, ?, ?, ?, ?) """, (symbol, quantity,
+                                                 bought_price, total, date))
     cursor.execute("""SELECT balance
                    FROM account_details
                    WHERE username = ?""", ("stanleyctg",))
@@ -124,8 +129,8 @@ def buy_stock():
 
 @app.route('/owned')
 def owned():
-    data = []
-    priceUnit = []
+    data, priceUnit = [], []
+
     conn = sqlite3.connect(database)
     cursor = conn.cursor()
     cursor.execute("SELECT * FROM stock_purchase")
@@ -154,22 +159,71 @@ def owned():
         # Append the message to the sublist
         stock.append(unit_message)
         stock.append(total_message)
-
     return render_template('stockowned.html', data=data, priceUnit=priceUnit)
+
 
 @app.route('/profile')
 def profile():
     conn = sqlite3.connect(database)
     cursor = conn.cursor()
-    data = []
+    global portfolio_balances
+    history_data, data, priceUnit, portfolio_balances = [], [], [], []
+    total = 0
 
-    cursor.execute("SELECT * FROM purchase_history")
+    conn = sqlite3.connect(database)
+    cursor = conn.cursor()
+    cursor.execute("""SELECT balance FROM account_details
+                   WHERE username = ?""", ('stanleyctg',))
+    balance_available = cursor.fetchone()
+    total += balance_available[0]
+    cursor.execute("SELECT * FROM stock_purchase")
     rows = cursor.fetchall()
     for row in rows:
         data.append(list(row))
+        priceUnit.append(list(row)[1])
+    for i in range(len(priceUnit)):
+        symbol_dict = (lookup(priceUnit[i]))
+        priceUnit[i] = symbol_dict["price"]
 
-    data.reverse()
-    return render_template("profile.html", data=data)
+    j, k = 0, 0
+    while j < len(data):
+        total += data[j][2] * priceUnit[k]
+        j += 1
+        k += 1
+    now = datetime.now()
+    date = now.strftime("%Y-%m-%d")
+    cursor.execute("""INSERT INTO portfolio
+                   (total_assets, date)
+                   VALUES (?, ?)""", (total, date))
+    cursor.execute("SELECT * FROM purchase_history")
+    rows = cursor.fetchall()
+    for row in rows[:10]:
+        history_data.append(list(row))
+    history_data.reverse()
+    conn.commit()
+
+    cursor.execute("SELECT total_assets, date FROM portfolio")
+    assets_row = cursor.fetchall()
+    assets_row.reverse()
+    dates = list(set(row[1] for row in assets_row))
+    start = 0
+    for row in assets_row:
+        for i in range(start, len(dates)):
+            if row[1] == date:
+                portfolio_balances.append(row)
+                start += 1
+    portfolio_balances.reverse()
+    conn.close()
+    return render_template("profile.html", data=history_data)
+
+
+@app.route('/profile/data')
+def get_portfolio_balances():
+    final_portfolio = [
+        [portfolio_balance[0] for portfolio_balance in portfolio_balances],
+        [portfolio_balance[1] for portfolio_balance in portfolio_balances]
+    ]
+    return jsonify(final_portfolio)
 
 
 if __name__ == '__main__':

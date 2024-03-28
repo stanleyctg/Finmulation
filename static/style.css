@@ -216,7 +216,7 @@ table {
     width: 80%; /* Adjust as necessary */
     table-layout: fixed;
     border-collapse: collapse;
-    bottom: 12%;
+    top: 50%;
     /* Removed align-self and overflow-y; placed overflow-y on the container */
 }
 

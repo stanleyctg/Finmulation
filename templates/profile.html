@@ -3,7 +3,7 @@
 {% block body %}
 
 <div class="content-wrapper">
-    <div class="row chartContainer" style="padding-top: 10%;">
+    <div class="row chartContainer" style="padding-top: 5%;">
         <canvas id="profile-chart-container"></canvas>
     </div>
 
@@ -17,7 +17,7 @@
             <tbody>
                 {% for s in data %}
                 <tr>
-                    <td>You've bought {{ s[2] }} stocks of {{ s[1] }}, with a unit price of ${{ s[3] }} at a total cost of ${{ s[4] }}</td>
+                    <td>On {{ s[-1] }}, you've bought {{ s[2] }} stocks of {{ s[1] }}, with a unit price of ${{ s[3] }} at a total cost of ${{ s[4] }}</td>
                 </tr>
                 {% endfor %}
             </tbody>

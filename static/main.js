@@ -161,25 +161,28 @@ document.addEventListener("DOMContentLoaded", function() {
     
     
     document.addEventListener("DOMContentLoaded", function() {
-        // Generate random dataset    
+        fetch('/profile/data')
+        .then(response => response.json())
+        .then(final_portfolio => {
         const ctx = document.getElementById('profile-chart-container').getContext('2d');
         var myChart = new Chart(ctx, {
             type: 'line',
             data: {
-                labels: [2,3,5],
+                labels: final_portfolio[1],
                 datasets: [{
                     label: "Portfolio Chart",
-                    data: [1,2,3],
+                    data: final_portfolio[0],
                     borderColor: 'rgb(75, 192, 192)',
                     borderWidth: 1
                 }]
             },
+        
             options: {
                 scales: {
                     x: {
                         title: {
                             display: true,
-                            text: "x-values",
+                            text: "Date (yyyy-mm-dd)",
                             font: {
                                 lineHeight: 1.2,
                                 weight: 'bold'
@@ -190,7 +193,7 @@ document.addEventListener("DOMContentLoaded", function() {
                         beginAtZero: false,
                         title: {
                             display: true,
-                            text: "y-values",
+                            text: "Net balance ($)",
                             font: {
                                 lineHeight: 1.2,
                                 weight: 'bold'
@@ -199,6 +202,7 @@ document.addEventListener("DOMContentLoaded", function() {
                     }
                 }
             }
+        })
         });
     });
     

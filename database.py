@@ -26,7 +26,16 @@ CREATE TABLE IF NOT EXISTS purchase_history(
     symbol TEXT NOT NULL,
     quantity INTEGER NOT NULL,
     bought_price REAL NOT NULL,
-    total REAL NOT NULL
+    total REAL NOT NULL,
+    date DATETIME NOT NULL
+)
+''')
+
+cursor.execute('''
+CREATE TABLE IF NOT EXISTS portfolio(
+    id INTEGER PRIMARY KEY,
+    total_assets REAL NOT NULL,
+    date DATETIME NOT NULL
 )
 ''')
 
