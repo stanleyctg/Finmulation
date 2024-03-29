@@ -176,8 +176,25 @@ document.addEventListener("DOMContentLoaded", function() {
                     borderWidth: 1
                 }]
             },
-        
             options: {
+                plugins: {
+                    annotation: {
+                        annotations: {
+                            line1: {
+                                type: 'line',
+                                yMin: 10000,
+                                yMax: 10000,
+                                borderColor: 'lightblue',
+                                borderWidth: 4,
+                                label: {
+                                    content: 'default',
+                                    enabled: false,
+                                    position: 'start',
+                                }
+                            }
+                        }
+                    }
+                },
                 scales: {
                     x: {
                         title: {

@@ -209,10 +209,11 @@ def profile():
     start = 0
     for row in assets_row:
         for i in range(start, len(dates)):
-            if row[1] == date:
+            if row[1] == dates[i]:
                 portfolio_balances.append(row)
                 start += 1
     portfolio_balances.reverse()
+    print(portfolio_balances)
     conn.close()
     return render_template("profile.html", data=history_data)
 
