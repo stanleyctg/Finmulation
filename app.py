@@ -205,7 +205,9 @@ def profile():
     cursor.execute("SELECT total_assets, date FROM portfolio")
     assets_row = cursor.fetchall()
     assets_row.reverse()
-    dates = list(set(row[1] for row in assets_row))
+    print(assets_row)
+    dates = sorted(list(set([row[1] for row in assets_row])), reverse=True)
+    print(dates)
     start = 0
     for row in assets_row:
         for i in range(start, len(dates)):
@@ -224,6 +226,7 @@ def get_portfolio_balances():
         [portfolio_balance[0] for portfolio_balance in portfolio_balances],
         [portfolio_balance[1] for portfolio_balance in portfolio_balances]
     ]
+    print(portfolio_balances)
     return jsonify(final_portfolio)
 
 
