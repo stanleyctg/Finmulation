@@ -22,7 +22,10 @@ Language used: Flask(python), HTML, CSS, Javascript (AJAX, chart.js), SQLite3
 5 weeks to complete before moving into market predictions.
 Weekly agendas:
 Week1: Prepare all the pages. Allow user to search for symbols, and display price of each stock with quantity and buy button. (Done)
-Week2: Complete buy function and add it to the purchase history and stocks owned page. At this point should start on database.
-Week3: Complete sell function and performance chart.
-Week4: Complete login system 
-Week5: Additional styling
+Week2: Complete buy function and add it to the purchase history and stocks owned page. At this point should start on database. (Done)
+Week3: Complete sell function and performance chart. (Done)
+Week4: Complete code design. (Done)
+Week5: Additional styling. (Done)
+
+Phase 2:
+Implement predicting model for stock trends.
