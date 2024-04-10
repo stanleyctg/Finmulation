@@ -2,6 +2,7 @@ html {
     height: 100%; /* Ensure the html element covers the full height */
 }
 
+/* Initialise the body of every html page */
 body {
     margin: 0;
     padding: 0;
@@ -16,38 +17,44 @@ body {
     min-height: 100%; /* Ensure it covers the full viewport height */
 }
 
-
+/* Initialise the header for every html page */
 header {
     background-color: #333;
     padding: 10px 20px;
     color: white;
 }
 
+/* Style navbar on all pages */
 nav {
     display: flex;
     justify-content: space-between;
     align-items: center;
 }
 
+/* Style navbar on all pages */
 .title {
     text-align: center;
     color: #333;
 }
 
+/* Style navbar on all pages */
 .nav-links {
     list-style: none;
 }
 
+/* Style navbar on all pages */
 .nav-links li {
     display: inline;
     margin-left: 20px;
 }
 
+/* Style navbar on all pages */
 .nav-links li a {
     color: white;
     text-decoration: none;
 }
 
+/* Style the search container to be somewhat centered horizontally */
 .search-container {
     display: flex;
     justify-content: center;
@@ -72,6 +79,7 @@ nav {
     cursor: pointer;
 }
 
+/* Style the footer for all pages */
 footer {
     position: fixed;
     left: 0;
@@ -89,6 +97,7 @@ footer {
     text-align: center;
 }
 
+/* Style the owned table page */
 table, th, td {
     border-bottom: #333 solid 1.5px;
     border-collapse: collapse;
@@ -108,42 +117,7 @@ table {
     bottom: 88px;
   }
 
-.coin {
-    position: fixed;
-    bottom: 500px;
-}
-
-.bill {
-    position: fixed;
-    bottom: 350px;
-    margin-left: 80px;
-}
-
-.bill2 {
-    position: fixed;
-    bottom: 350px;
-    right: 80px;
-}
-
-.currencies {
-    position: fixed;
-    bottom: 450px;
-    margin-left: 25%;
-    transform: rotate(330deg);
-}
-
-.stocks {
-    position: fixed;
-    bottom: 450px;
-    right: 350px;
-}
-
-.coin2 {
-    position: fixed;
-    right: 10px;
-    bottom: 500px;
-}
-
+/* Style the balance container located */
 .balance-box {
     position: fixed;
     right: 30px;
@@ -158,6 +132,7 @@ table {
     align-items: center; /* Center content horizontally */
 }
 
+/* Style the table container for owned */
 .table-container {
     display: flex;
     justify-content: center; /* Center horizontally */
@@ -165,12 +140,12 @@ table {
     overflow-y: auto; /* Allows vertical scrolling if the table is taller than the container */
 }
 
+/* Style the owned table */
 .owned-table {
-    width: 80%; /* Adjust as necessary */
+    width: 80%;
     table-layout: fixed;
     border-collapse: collapse;
     top: 12%
-    /* Removed align-self and overflow-y; placed overflow-y on the container */
 }
 
 .owned-table th,
@@ -196,7 +171,7 @@ table {
     box-shadow: 0 2px 2px -1px rgba(0,0,0,0.4);
 }
 
-
+/* Style the chart for history prices of stock at home page */
 .chartContainer {
     display: flex;
     justify-content: center; /* Center horizontally */
@@ -204,7 +179,7 @@ table {
     height: 300px; /* Full viewport height */
 }
 
-
+/* Style the history table in profile */
 .history-table-container {
     display: flex;
     justify-content: center; /* Center horizontally */
@@ -238,10 +213,4 @@ table {
     top: 0;
     background-color: #f9f9f9;
     z-index: 2;
-}
-
-.profile-title{
-    text-align: center;
-    font-size: larger;
-
 }

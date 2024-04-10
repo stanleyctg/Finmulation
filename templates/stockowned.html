@@ -1,6 +1,7 @@
 {% extends "layout.html" %}
 
 {% block body %}
+<!-- Set the table to show the owned page -->
  <div class="table-container" onload="setDefaultValue()">
         <table class="owned-table">
         <thead>
@@ -14,6 +15,7 @@
             </tr>
         </thead>
         <tbody>
+            <!-- Data is retrieved from '/owned' route -->
             {% for s in data %}
                 <tr>
                     <td>{{ s[1] }}</td>
@@ -22,6 +24,7 @@
                     <td id="sellRate-{{ s[1] }}">${{ s[-3] }}</td>
                     <td>{{ s[-2] }} <br> {{ s[-1] }}</td>
                     <td>
+                        <!-- Create buttons and quantity where each id is uniquely the stock symbol -->
                         <input type="number" id="quantity-{{ s[1] }}" name="quantity-{{ s[1] }}" min="1" max="{{ s[2] }}" value="1">
                         <button id="sell-btn-{{ s[1] }}">Sell</button>
                         <p>Total: $<span id="total-{{ s[1] }}">{{ s[-3] }}</span></p> 
@@ -32,38 +35,6 @@
     </table>
  </div>   
 
-</div>
-<script src="{{ url_for('static', filename='main.js') }}"></script>
-
-<!-- <script>
-    document.addEventListener("DOMContentLoaded", function() {
-    // Listen for input on any quantity input
-        document.querySelectorAll('[id^="quantity-"]').forEach(input => {
-            input.value  = 1
-            input.addEventListener('input', function() {
-                var symbol = this.id.split('-')[1];
-                var sellRate = parseFloat(document.getElementById(`sellRate-${symbol}`).innerText); // Assuming the sell rate is stored in total initially
-                var newTotal = this.value * sellRate;
-
-                document.getElementById(`total-${symbol}`).innerText = newTotal.toFixed(2);
-
-            });
-        });
-    });
-
-    document.querySelectorAll('[id^="sell-btn-"]').forEach(button => {
-        button.addEventListener('click', function() {
-            var symbol = this.id.split('-')[2];
-            var quantityInput = document.getElementById(`quantity-${symbol}`);
-            var sellRate = parseFloat(document.getElementById(`sellRate-${symbol}`).innerText);
-            var quantity = parseInt(quantityInput.value, 10);
-            var totalSale = quantity * sellRate;
-
-            alert(`Selling ${quantity} of ${symbol} for a total of $${totalSale}`);
-        });
-    });
-
-</script>  -->
-    
+</div>   
 
 {% endblock %}

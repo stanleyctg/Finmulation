@@ -3,10 +3,12 @@
 {% block body %}
 
 <div class="content-wrapper">
+    <!-- Place to be populated by the portfolio chart -->
     <div class="row chartContainer" style="padding-top: 5%;">
         <canvas id="profile-chart-container"></canvas>
     </div>
 
+    <!-- Place to populate the history table -->
     <div class="history-table-container">
         <table class="history-table">
             <thead>
@@ -15,6 +17,7 @@
                 </tr>
             </thead>
             <tbody>
+                <!-- Getting the data from '/profile' at flask -->
                 {% for s in data %}
                 <tr>
                     <td>On {{ s[-1] }}, you've bought {{ s[2] }} stocks of {{ s[1] }}, with a unit price of ${{ s[3] }} at a total cost of ${{ s[4] }}</td>
@@ -24,9 +27,6 @@
         </table>
     </div>
 </div>
-
-
-<script src="{{ url_for('static', filename='main.js') }}"></script>
 
 
 {% endblock %}
