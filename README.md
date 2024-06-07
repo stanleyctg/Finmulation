@@ -1,4 +1,4 @@
-Stock Trading Simulation Project
+#Stock Trading Simulation Project
 Description
 This project is a stock trading simulation platform that retrieves real-time stock prices using Yahoo Finance. Users start with a default balance of $10,000, which they can use to buy and sell stocks. A performance chart shows the user's balance over time, indicating their success in beating the market.
 
