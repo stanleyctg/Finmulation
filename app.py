@@ -9,9 +9,29 @@ class Finmulation:
     def __init__(self, database):
         self.app = Flask(__name__)
         self.database = database
-        self.portfolio_balances = []
         self.setup_routes()
         self.setup_context_processors()
+   
+    def fetch_portfolio_balances(self, database):
+        conn = sqlite3.connect(database)
+        cursor = conn.cursor()
+
+        # Fetch portfolio balances
+        cursor.execute("SELECT total_assets, date FROM portfolio")
+        assets_row = cursor.fetchall()
+        assets_row.reverse()
+        dates = sorted(list(set([row[1] for row in assets_row])), reverse=True)[:7]
+        start = 0
+        portfolio_balances = []
+        for row in assets_row:
+            for i in range(start, len(dates)):
+                if row[1] == dates[i]:
+                    portfolio_balances.append(row)
+                    start += 1
+        portfolio_balances.reverse()
+
+        conn.close()
+        return portfolio_balances
 
     def setup_routes(self):
         @self.app.route('/')
@@ -159,17 +179,19 @@ class Finmulation:
 
             conn = sqlite3.connect(self.database)
             cursor = conn.cursor()
+
             cursor.execute("""SELECT balance FROM account_details
-                           WHERE username = ?""", ('stanleyctg',))
+                        WHERE username = ?""", ('stanleyctg',))
             balance_available = cursor.fetchone()
             total += balance_available[0]
+
             cursor.execute("SELECT * FROM stock_purchase")
             rows = cursor.fetchall()
             for row in rows:
                 data.append(list(row))
                 priceUnit.append(list(row)[1])
             for i in range(len(priceUnit)):
-                symbol_dict = (lookup(priceUnit[i]))
+                symbol_dict = (lookup(priceUnit[i]))  # Assuming lookup function is defined somewhere
                 priceUnit[i] = symbol_dict["price"]
 
             j, k = 0, 0
@@ -177,37 +199,34 @@ class Finmulation:
                 total += data[j][2] * priceUnit[k]
                 j += 1
                 k += 1
+
             now = datetime.now()
             date = now.strftime("%Y-%m-%d")
             cursor.execute("""INSERT INTO portfolio
-                           (total_assets, date)
-                           VALUES (?, ?)""", (total, date))
+                        (total_assets, date)
+                        VALUES (?, ?)""", (total, date))
+
             cursor.execute("SELECT * FROM purchase_history")
             rows = cursor.fetchall()
             for row in rows[-10:]:
                 history_data.append(list(row))
             history_data.reverse()
+
             conn.commit()
 
-            cursor.execute("SELECT total_assets, date FROM portfolio")
-            assets_row = cursor.fetchall()
-            assets_row.reverse()
-            dates = sorted(list(set([row[1] for row in assets_row])), reverse=True)[:7]
-            start = 0
-            for row in assets_row:
-                for i in range(start, len(dates)):
-                    if row[1] == dates[i]:
-                        self.portfolio_balances.append(row)
-                        start += 1
-            self.portfolio_balances.reverse()
-            conn.close()
+            # Fetch portfolio balances using the function
+            portfolio_balances = self.fetch_portfolio_balances(self.database)
+
             return render_template("profile.html", data=history_data)
 
         @self.app.route('/profile/data')
         def get_portfolio_balances():
+            # Fetch portfolio balances using the function
+            portfolio_balances = self.fetch_portfolio_balances(self.database)
+
             final_portfolio = [
-                [portfolio_balance[0] for portfolio_balance in self.portfolio_balances],
-                [portfolio_balance[1] for portfolio_balance in self.portfolio_balances]
+                [portfolio_balance[0] for portfolio_balance in portfolio_balances],
+                [portfolio_balance[1] for portfolio_balance in portfolio_balances]
             ]
             return jsonify(final_portfolio)
 
