@@ -116,8 +116,7 @@ function buyStock(symbol, quantity, totalCost, pricePerStock) {
             boughtPrice: pricePerStock,
             total: totalCost
         },
-        // If success, pop a message 
-        // else error
+
         success: function(response){
             alert(response.message);
             balanceT.innerHTML = "Balance: $" + response.new_balance;
