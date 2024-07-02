@@ -6,17 +6,18 @@ from prophet import Prophet
 from prophet.plot import plot_plotly
 
 class Finmulation:
+    # Set up instances
     def __init__(self, database):
         self.app = Flask(__name__)
         self.database = database
         self.setup_routes()
         self.setup_context_processors()
-   
+
+    # Fetch portfolio balance from database
     def fetch_portfolio_balances(self, database):
         conn = sqlite3.connect(database)
         cursor = conn.cursor()
 
-        # Fetch portfolio balances
         cursor.execute("SELECT total_assets, date FROM portfolio")
         assets_row = cursor.fetchall()
         assets_row.reverse()
@@ -33,11 +34,13 @@ class Finmulation:
         conn.close()
         return portfolio_balances
 
+    # Set up routes for the program
     def setup_routes(self):
         @self.app.route('/')
         def home():
             return render_template('home.html')
-
+        
+        # Search symbol and obtain its data
         @self.app.route('/search', methods=['POST'])
         def search():
             symbol = request.form['symbol']
@@ -48,6 +51,7 @@ class Finmulation:
             return jsonify(searched_symbol=data_final,
                            total=total, past_data=past_data)
 
+        # Sell shares of stock and update database
         @self.app.route('/sell', methods=['POST'])
         def sell_stock():
             symbol = request.form['symbol']
@@ -87,6 +91,7 @@ class Finmulation:
             conn.close()
             return jsonify({"new_balance": new_balance})
 
+        # Buy shares of stocks and update database
         @self.app.route('/buy', methods=['POST'])
         def buy_stock():
             symbol = request.form['symbol']
@@ -138,6 +143,7 @@ class Finmulation:
                             "message": message,
                             "new_balance": new_balance})
 
+        # Fetch owned stocks from database
         @self.app.route('/owned')
         def owned():
             data, priceUnit = [], []
@@ -172,6 +178,7 @@ class Finmulation:
                 stock.append(total_message)
             return render_template('stockowned.html', data=data, priceUnit=priceUnit)
 
+        # Display purchase history of user
         @self.app.route('/profile')
         def profile():
             history_data, data, priceUnit = [], [], []
@@ -191,7 +198,7 @@ class Finmulation:
                 data.append(list(row))
                 priceUnit.append(list(row)[1])
             for i in range(len(priceUnit)):
-                symbol_dict = (lookup(priceUnit[i]))  # Assuming lookup function is defined somewhere
+                symbol_dict = (lookup(priceUnit[i]))
                 priceUnit[i] = symbol_dict["price"]
 
             j, k = 0, 0
@@ -219,6 +226,7 @@ class Finmulation:
 
             return render_template("profile.html", data=history_data)
 
+        # Send portfolio balance to illustrate performance via chart
         @self.app.route('/profile/data')
         def get_portfolio_balances():
             # Fetch portfolio balances using the function
@@ -234,6 +242,7 @@ class Finmulation:
         def analysis():
             return render_template('analysis.html')
 
+    # Allow balance of user to be accessible through the program
     def setup_context_processors(self):
         @self.app.context_processor
         def inject_user():
@@ -246,6 +255,7 @@ class Finmulation:
             account_details = cursor.fetchone()
             return {'account': account_details}
 
+    # Run the app
     def run(self, *args, **kwargs):
         self.app.run(*args, **kwargs)
 
